@@ -595,17 +595,15 @@ jobs:
           mkdir -p ./build/bin/rocblas/library
           mkdir -p ./build/bin/hipblaslt/library
 
-          # Copy ROCm runtime libraries (use || true to continue if files don't exist)
-          cp /opt/rocm/lib/librocsparse.so* ./build/bin/ || true
-          cp /opt/rocm/lib/libhsa-runtime64.so* ./build/bin/ || true
-          cp /opt/rocm/lib/libamdhip64.so* ./build/bin/ || true
-          cp /opt/rocm/lib/libhipblas.so* ./build/bin/ || true
-          cp /opt/rocm/lib/libhipblaslt.so* ./build/bin/ || true
-          cp /opt/rocm/lib/librocblas.so* ./build/bin/ || true
-
-          # Copy library files (already filtered to target architectures)
-          cp /opt/rocm/lib/rocblas/library/* ./build/bin/rocblas/library/ || true
-          cp /opt/rocm/lib/hipblaslt/library/* ./build/bin/hipblaslt/library/ || true
+          # Move ROCm runtime libraries (to avoid double space consumption)
+          sudo mv /opt/rocm/lib/librocsparse.so* ./build/bin/
+          sudo mv /opt/rocm/lib/libhsa-runtime64.so* ./build/bin/
+          sudo mv /opt/rocm/lib/libamdhip64.so* ./build/bin/
+          sudo mv /opt/rocm/lib/libhipblas.so* ./build/bin/
+          sudo mv /opt/rocm/lib/libhipblaslt.so* ./build/bin/
+          sudo mv /opt/rocm/lib/librocblas.so* ./build/bin/
+          sudo mv /opt/rocm/lib/rocblas/ ./build/bin/
+          sudo mv /opt/rocm/lib/hipblaslt/ ./build/bin/
 
       - name: Fetch system info
         id: system-info
